@@ -1,0 +1,13 @@
+#include <iostream.h>
+#include <string.h>
+using namespace std;
+int main () {
+   char str[50]="This is tutorialspoint.com";
+   int len;
+
+   len = strlen(str);
+   cout<<"length of String is:"<<endl;
+   cout<<len<<endl;
+   
+   return(0);
+}

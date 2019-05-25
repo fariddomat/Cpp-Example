@@ -1,0 +1,22 @@
+#include<iostream.h>
+#include<math.h>
+class fractional{
+	private:
+		float b,m;//X
+	public: //X
+		fractional(float=1,float=1);
+		void setb(float);
+		void setm(float);
+		float getb(){return b;}//X
+		float getm(){return m;}
+		~fractional(){}
+};
+fractional::fractional(float b1,float m1){b=b1;m=m1;}//X
+void fractional::setb(float b1){b=b1;}//X
+void fractional::setm(float m1){m=m1;}
+main(){
+	float x=4,y=6;//X
+	fractional f(x,y);
+	cout<<f.getb()<<"/"<<f.getm()<<endl;
+	char stop;cout<<"Enter e to exit";cin>>stop;
+}

@@ -1,0 +1,47 @@
+#include<iostream>
+using namespace std;
+class Travel{
+	private:
+		int id;
+		char city1[20];
+		char city2[20];
+		float timeTo;
+		float cost;
+	public:
+		Travel(){
+			id=1;
+			strcpy(city1,"homs");
+			strcpy(city2,"damas");
+			timeTo=1.5;
+			cost=700;
+		}
+		Travel(int id_1,char city1_1[],char city2_1[],float timeTo_1,float cost_1){
+			id=id_1;
+			strcpy(city1,city1_1);
+			strcpy(city2,city2_1);
+			timeTo=timeTo_1;
+			cost=cost_1;
+		}
+		
+		void print(Travel t[],int n){
+			Travel temp=t[0];
+			for(int i=1;i<n;i++){
+				if(t[i].timeTo<temp.timeTo){
+					temp=t[i];
+				}
+			}
+			
+			cout<<temp.id<<"\t"<<temp.city1<<"\t"
+				<<temp.city2<<"\t"<<temp.timeTo<<"\t"
+				<<temp.cost<<endl;	
+		}
+};
+main(){
+	Travel t1(1,"Damas","homs",3.5,2500);
+	Travel t2(2,"tartus","homs",2,3000);
+	Travel t3(3,"Damas","aleppo",7,4000);
+	Travel travels[3]={t1,t2,t3};
+	
+	t1.print(travels,3);
+}
+

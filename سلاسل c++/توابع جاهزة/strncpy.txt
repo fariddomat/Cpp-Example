@@ -1,0 +1,14 @@
+#include <iostream.h>
+#include <string.h>
+using namespace std;
+int main () {
+   char src[40] ="This is tutorialspoint.com";
+   char dest[12];
+  
+   strncpy(dest, src, 11);
+
+   cout<<"Final copied string : \n";
+   cout<<dest<<endl;
+   
+   return(0);
+}

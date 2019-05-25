@@ -1,0 +1,132 @@
+#include<iostream>
+#include<fstream>
+using namespace std;
+struct worker{
+	int id;
+	char fname[20];
+	char lname[20];
+	int depnum;
+	float salary;
+	int gender;
+	int birthyear;
+};
+void w(fstream &f,worker c,int i);
+void r(fstream &f,worker &c,int i);
+void input(fstream &stream);
+void workerPerDepartment(fstream &stream);
+void average(fstream &stream);
+void increase(fstream &stream);
+void retireOld(fstream &stream,ofstream &out);
+int main(){
+	fstream bin;
+	bin.open("D:\\test.dat",ios::in | ios::out);
+	input(bin);
+	//workerPerDepartment(bin);
+	//average(bin);
+	//increase(bin);
+	ofstream retire("D:\\old.txt",ios::out);
+	retireOld(bin,retire);
+	return 0;
+}
+void w(fstream &f,worker c,int i){
+	f.seekp(i * sizeof(worker));
+	f.write((char*) &c, sizeof(worker));
+}
+void r(fstream &f,worker &c,int i){
+	f.seekg(i * sizeof(worker));
+	f.read((char*) &c, sizeof(worker));
+}
+void input(fstream &stream){
+	worker temp;
+	int t=1;
+	stream.seekp(0);
+	while(t>0){
+		cout<<"id\tfirstname\tlastname\tSalary\tgender\t"<<
+			"department number\tbirthyear?\n";
+		cin>>temp.id>>temp.fname>>temp.lname>>temp.salary
+			>>temp.gender>>temp.depnum>>temp.birthyear;
+		w(stream,temp,temp.id - 1);
+		cout<<"do you want to continue? (0 for no)\n";
+		cin>>t;
+	}
+	cout<<"don entering"<<endl;
+}
+void workerPerDepartment(fstream &stream){
+	int dep[9];
+	for(int i=0;i<9;i++)
+		dep[i]=0;
+	stream.seekg(0);
+	int i=0;
+		worker w;
+		r(stream,w,i);
+	while(!stream.eof()){
+		if(w.id!=0)
+			dep[w.depnum]++;
+		i++;
+		r(stream,w,i);
+	}
+	for(int i=0;i<9;i++)
+		cout<<"workder in department"<<i<<"="<<dep[i]<<endl;
+}
+void average(fstream &stream){
+	float male_salary=0;
+	int male_count=0;
+	float female_salary=0;
+	int female_count=0;
+	stream.seekg(0);
+	int i=0;
+		worker w;
+		r(stream,w,i);
+	while(!stream.eof()){
+		if(w.id!=0){
+			if(w.gender == 1){
+				male_count++;
+				male_salary += w.salary;
+			}else{
+				female_count++;
+				female_salary += w.salary;
+			}
+		}
+		i++;
+		r(stream,w,i);
+	}
+	
+	
+	cout<<"Male Salary:\t"<<(male_salary /male_count)
+		<<"\nFemale Salary:\t"<<(female_salary /female_count);
+}
+void increase(fstream &stream){
+	stream.seekg(0);
+	stream.seekp(0);
+	int i=0;
+	while(!stream.eof()){
+		worker ww;
+		r(stream,ww,i);
+		if(ww.id!=0){
+			ww.salary+=ww.salary*0.25;
+			w(stream,ww,i);
+		}
+		i++;
+	}
+}
+void retireOld(fstream &stream,ofstream &out){
+	out<<"test\n";
+	stream.seekg(0);
+	stream.seekp(0);
+	int i=0;
+	while(!stream.eof()){
+		worker ww;
+		r(stream,ww,i);
+		if(ww.id!=0){
+			if(2019-ww.birthyear>60){
+				out<<ww.id<<"\t"<<ww.fname<<"\t"<<
+					ww.lname<<"\t"<<ww.birthyear<<"\t"<<
+					ww.depnum<<"\t"<<ww.salary<<"\t"<<
+					ww.gender<<endl;
+				ww.id=0;
+				w(stream,ww,i);
+			}
+		}
+		i++;
+	}
+}

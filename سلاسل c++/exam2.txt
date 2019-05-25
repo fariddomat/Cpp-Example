@@ -1,0 +1,44 @@
+#include <iostream.h>
+#include <stdio.h>
+#include <string.h>
+using namespace std;
+void change(char *);
+int main () {
+   char str[80];
+   cin.getline(str, 80); 
+   
+   change(str);
+  
+   return(0);
+}
+
+void change(char str[]) {
+	int i=0;
+	while(str[i]!='\0'){
+		if(str[i]==str[i+1]){
+			if(isupper(str[i])){
+				if(str[i]>'A'){
+					str[i]=str[i]-1;
+					str[i+1]=str[i+1]-1;
+				}
+				else{
+					str[i]='Z';
+					str[i+1]='Z';
+					
+				}
+			}else{
+				if(str[i]<'z'){
+					str[i]=str[i]+1;
+					str[i+1]=str[i+1]+1;
+				}
+				else{
+					str[i]='a';
+					str[i+1]='a';
+					
+				}
+			}
+		}
+		i++;
+	}
+	cout<<str<<endl;
+}

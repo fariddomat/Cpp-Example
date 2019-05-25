@@ -1,0 +1,14 @@
+#include<iostream.h>
+#include<conio.h>
+main()
+{
+      cout<<"*********\n"<<"*\t"<<"*\n";
+      cout<<"*\t"<<"*\n";
+      cout<<"*\t"<<"*\n";
+      cout<<"*\t"<<"*\n";
+      cout<<"*\t"<<"*\n";
+      cout<<"*\t"<<"*\n";
+      cout<<"*\t"<<"*\n";
+      cout<<"*********\n";
+      getch();
+      }

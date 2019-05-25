@@ -1,0 +1,56 @@
+#include<iostream>
+#include<fstream>
+using namespace std;
+struct student{
+	int id;
+	char fname[20];
+	float average;
+};
+void w(fstream &f,student c,int i);
+void r(fstream &f,student &c,int i);
+void input(fstream &f);
+void copytoFile(fstream &f,ofstream &of);
+int main(){
+	fstream f;
+	f.open("D:\\test.dat",ios::in | ios::out);
+	input(f);
+	ofstream of("D:\\copy.txt",ios::out);
+	copytoFile(f,of);
+	return 0;
+}
+void w(fstream &f,student s,int i){
+	f.seekp(i * sizeof(student));
+	f.write((char*) &s, sizeof(student));
+}
+void r(fstream &f,student &s,int i){
+	f.seekg(i * sizeof(student));
+	f.read((char*) &s, sizeof(student));
+}
+void input(fstream &f){
+	int n;
+	cout<<"enter student number\n";
+	cin>>n;
+	student s;
+	int t=1;
+	f.seekp(0);
+	for(int i=0;i<n;i++){
+		cout<<"id\tfirstname\taverage\n";
+		cin>>s.id>>s.fname>>s.average;
+		w(f,s,s.id - 1);
+	}
+	cout<<"don entering"<<endl;
+}
+void copytoFile(fstream &f,ofstream &of){
+	
+	f.seekg(0);
+	f.seekp(0);
+	int i=0;
+	student s;
+	r(f,s,i);
+	while(!f.eof()){
+		of<<s.id<<"\t"<<s.fname<<"\t"<<
+			s.average<<endl;
+		i++;
+		r(f,s,i);
+	}
+}

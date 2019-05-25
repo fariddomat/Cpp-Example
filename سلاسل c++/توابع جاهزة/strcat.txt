@@ -1,0 +1,13 @@
+#include <iostream.h>
+#include <string.h>
+using namespace std;
+int main () {
+   char src[50]="This is source";
+   char dest[50]="This is destination";
+
+   strcat(dest, src);
+   cout<<"Final destination string : "<<endl;
+   cout<<dest<<endl;
+   
+   return(0);
+}
